@@ -1,5 +1,5 @@
 import { getme } from "./auth.js";
-import { islogin, getParam } from "./utils.js";
+import { islogin, getParam, switealert } from "./utils.js";
 
 const user_namebtn = document.querySelector(".user_name");
 const top_bar = document.querySelector(".top-bar__menu");
@@ -236,6 +236,27 @@ const getRealatedCours = async (shortname) => {
   return data;
 };
 
+const newsletters = async () => {
+  let emailinpute = document.querySelector("#news-letter-input");
+  let email = {
+    email: emailinpute.value,
+  };
+
+  let res = await fetch("http://localhost:3501/v1/newsletters", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(email),
+  });
+  if (res.status === 201) {
+    switealert("بزودی اخبار جدید دریافت خواهید کرد", "success", "ok", () => {});
+    emailinpute.value = "";
+  } else {
+    switealert("ارسال نشد", "error", "ok", () => {});
+  }
+};
+
 export {
   getAndShowAllcourses,
   getPopularCourses,
@@ -245,4 +266,5 @@ export {
   insertCoursboxHTML,
   getAndShowSingleCours,
   getRealatedCours,
+  newsletters,
 };
