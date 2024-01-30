@@ -3,12 +3,13 @@ const landingTitle = $.querySelector(".landing__title");
 const landingCoursesCount = $.querySelector("#courses-count");
 const landingMinutesCount = $.querySelector("#minutes-counter");
 const landingUsersCount = $.querySelector("#users-counter");
-
+const news_letter_submit_btn = $.querySelector("#news-letter-submit-btn");
 import {
   getAndShowAllcourses,
   getPopularCourses,
   getPresallCourses,
   getShowAllArticls,
+  newsletters,
 } from "./share.js";
 
 const lastCourses = () => {
@@ -257,3 +258,8 @@ function makeCounter(max, elem) {
     counter++;
   }, 0.5);
 }
+
+news_letter_submit_btn.addEventListener("click", (e) => {
+  e.preventDefault();
+  newsletters();
+});
