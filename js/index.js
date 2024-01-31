@@ -11,6 +11,7 @@ import {
   getShowAllArticls,
   newsletters,
 } from "./share.js";
+import { switealert } from "./utils.js";
 
 const lastCourses = () => {
   const latest_courses_index_page = document.querySelector(
@@ -256,10 +257,40 @@ function makeCounter(max, elem) {
 
     elem.innerHTML = counter;
     counter++;
-  }, 0.5);
+  }, 0.1);
 }
 
 news_letter_submit_btn.addEventListener("click", (e) => {
   e.preventDefault();
   newsletters();
+});
+
+let landing__searchbar_input = document.querySelector(
+  ".landing__searchbar-input"
+);
+let landing__searchbar_btn = document.querySelector(".landing__searchbar-btn");
+
+window.addEventListener("keypress", (e) => {
+  if (e.charCode === 13) {
+    let value = landing__searchbar_input.value;
+    let search = value.toLowerCase().trim();
+
+    if (landing__searchbar_input.value.length) {
+      location.href = `search.html?value=${search}`;
+      landing__searchbar_input.value = "";
+    } else {
+      switealert("خطا ورودی \n مقدار جستجو خالی است ", "error", "ok", () => {});
+    }
+  }
+  landing__searchbar_btn.addEventListener("click", () => {
+    let value = landing__searchbar_input.value;
+    let search = value.toLowerCase().trim();
+
+    if (landing__searchbar_input.value.length) {
+      location.href = `search.html?value=${search}`;
+      landing__searchbar_input.value = "";
+    } else {
+      switealert("خطا ورودی \n مقدار جستجو خالی است ", "error", "ok", () => {});
+    }
+  });
 });

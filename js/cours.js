@@ -7,6 +7,9 @@ window.addEventListener("load", async () => {
   const course_info__title = document.querySelector(".course-info__title");
   const course_info__link = document.querySelector(".course-info__link");
   const course_info__text = document.querySelector(".course-info__text");
+  const contComment = document.querySelector(
+    ".course-info__total-comment-text"
+  );
   const time_cours = document.querySelector("#time_cours");
   const course_info__register_title = document.querySelector(
     ".course-info__register-title"
@@ -23,6 +26,9 @@ window.addEventListener("load", async () => {
   });
   // Handel info main cours
   await getAndShowSingleCours(shortName).then((data) => {
+    console.log("====================================");
+    console.log(data);
+    console.log("====================================");
     let hourCours = 0;
     let Stringtime = null;
     if (data.sessions.length) {
@@ -38,6 +44,8 @@ window.addEventListener("load", async () => {
         Stringtime = "دقیقه";
       }
     }
+
+    contComment.innerHTML = `کامنت ها: ${data.comments.length}`;
 
     course_info__video.setAttribute("poster", data.cover);
     load
