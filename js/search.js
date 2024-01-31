@@ -1,13 +1,26 @@
-import { getParam } from "./utils.js";
+import { getParam, pageNatiosHandler } from "./utils.js";
 
 async function searchHandeler() {
   const courses = document.querySelector("#courses-container");
   const articlswrap = document.querySelector("#articles-wrapper");
+  const pageNatiosbtn = document.querySelector(".courses__pagination-list");
   let searchvalue = null;
+  let activepage = 2;
+
   await getParam("value").then((data) => (searchvalue = data));
 
   let res = await fetch(`http://localhost:3501/v1/search/${searchvalue}`);
   let data = await res.json();
+  let articls = pageNatiosHandler(
+    data.allResultArticles,
+    activepage,
+    2
+  ).maindata;
+  let pagecontbtn = pageNatiosHandler(
+    data.allResultArticles,
+    activepage,
+    2
+  ).Contpages;
 
   data.allResultCourses.length
     ? data.allResultCourses.map((cours) => {
@@ -54,7 +67,7 @@ async function searchHandeler() {
     : (courses.innerHTML = `<div class="alert alert-danger">دوره ای یافت نشد</div>`);
 
   data.allResultArticles.length
-    ? data.allResultArticles.map((articl) => {
+    ? articls.map((articl) => {
         articlswrap.insertAdjacentHTML(
           "beforeend",
           `
@@ -80,6 +93,23 @@ async function searchHandeler() {
         );
       })
     : (articlswrap.innerHTML = `<div class="alert alert-danger">مقاله ای یافت نشد</div>`);
+
+  Array(pagecontbtn)
+    .fill(0)
+    .map((page, index) => {
+      pageNatiosbtn.insertAdjacentHTML(
+        "beforeend",
+        `
+    <li class="courses__pagination-item">
+    <a href="#"   class="courses__pagination-link ${
+      index + 1 === activepage ? "courses__pagination-link--active" : ""
+    }">
+      ${index + 1}
+    </a>
+  </li>
+    `
+      );
+    });
 }
 
 window.addEventListener("load", async () => {

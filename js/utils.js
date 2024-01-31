@@ -28,6 +28,18 @@ const getParam = async (key) => {
   return result.get(key);
 };
 
+const pageNatiosHandler = (data, page, pageCont) => {
+  let endindex = page * pageCont;
+
+  let startendex = endindex - pageCont;
+
+  let maindata = data.slice(startendex, endindex);
+
+  let Contpages = Math.ceil(data.length / pageCont);
+
+  return { maindata, Contpages };
+};
+
 export {
   switealert,
   saveLocalStorage,
@@ -35,4 +47,5 @@ export {
   getToken,
   islogin,
   getParam,
+  pageNatiosHandler,
 };

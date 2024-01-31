@@ -26,9 +26,6 @@ window.addEventListener("load", async () => {
   });
   // Handel info main cours
   await getAndShowSingleCours(shortName).then((data) => {
-    console.log("====================================");
-    console.log(data);
-    console.log("====================================");
     let hourCours = 0;
     let Stringtime = null;
     if (data.sessions.length) {
