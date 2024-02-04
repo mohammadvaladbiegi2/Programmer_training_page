@@ -4,6 +4,8 @@ const landingCoursesCount = $.querySelector("#courses-count");
 const landingMinutesCount = $.querySelector("#minutes-counter");
 const landingUsersCount = $.querySelector("#users-counter");
 const news_letter_submit_btn = $.querySelector("#news-letter-submit-btn");
+const main_header__left = $.querySelector(".main-header__left");
+import { getme } from "./auth.js";
 import {
   getAndShowAllcourses,
   getPopularCourses,
@@ -235,6 +237,19 @@ window.addEventListener("load", async () => {
   await popularecours();
   await presellcours();
   await Articls();
+});
+
+getme().then((data) => {
+  if (data.role === "ADMIN") {
+    main_header__left.insertAdjacentHTML(
+      "beforeend",
+      `
+    <a href="/panel/main/index.html" class="main-header__profile" >
+    <span class="main-header__profile-text user_name">ورود به پنل ادمین</span>
+  </a>
+    `
+    );
+  }
 });
 
 function typeWriter(text, index) {
